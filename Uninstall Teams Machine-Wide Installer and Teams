@@ -1,0 +1,14 @@
+wmic product where "description='Teams Machine-Wide Installer' " uninstall
+
+Start-Sleep -s 30
+
+if (test-path C:\ProgramData\*\Microsoft\Teams\current\Teams.exe)
+{kill -name teams -force;
+(Get-ItemProperty C:\ProgramData\*\Microsoft\Teams\Current).PSParentPath | foreach-object {Start-Process $_\Update.exe -ArgumentList "--uninstall /s" -PassThru -Wait}
+}
+
+
+if (test-path C:\Users\*\AppData\Local\Microsoft\Teams\current\Teams.exe)
+{kill -name teams -force;
+(Get-ItemProperty C:\Users\*\AppData\Local\Microsoft\Teams\Current).PSParentPath | foreach-object {Start-Process $_\Update.exe -ArgumentList "--uninstall /s" -PassThru -Wait}
+}
